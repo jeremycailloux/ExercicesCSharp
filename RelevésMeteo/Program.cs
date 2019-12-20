@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace Météo
+namespace RelevésMeteo
 {
     class Program
     {
@@ -11,20 +11,14 @@ namespace Météo
             Console.OutputEncoding = Encoding.UTF8;
             try
             {
-                string[] file = File.ReadAllLines("..\\..\\..\\DonnéesMétéoParis.txt", Encoding.UTF8);
-                RelevéMensuel[] relevéMensuels = new RelevéMensuel[file.Length - 1];
+                
 
-                for (int i = 1; i < file.Length; i++)
-                {
-                    relevéMensuels[i] = new RelevéMensuel(file[i].Split('\t'));
-                }
-
-                Console.WriteLine(@"Mois    | T° min | T° max | Précip (mm) | Ensol (H)
+                Console.WriteLine(@"Mois | T° min | T° max | Précip (mm) | Ensol (H)
 ----------------------------------------------------");
 
-                foreach (var item in relevéMensuels)
+                foreach (var item in DAL.GetRelevésMensuels()) //on appel la methode pour qu'elle renvoit la liste
                 {
-                    Console.WriteLine(item.ToString());
+                    Console.WriteLine(item.ToString()); //on affiche les éléments un par un
                 }
             }
             catch (FormatException e)
